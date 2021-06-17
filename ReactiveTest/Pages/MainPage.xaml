@@ -15,7 +15,8 @@
         <Frame Margin="20"
                HasShadow="False"
                Grid.Row="0"
-               BorderColor="DeepSkyBlue">
+               BorderColor="DeepSkyBlue"
+               BackgroundColor="LightSkyBlue">
             <Frame.GestureRecognizers>
                 <TapGestureRecognizer CommandParameter="colors"
                                       Command="{Binding NavigateToSampleCommand}" />
@@ -28,7 +29,8 @@
         <Frame Margin="20"
                Grid.Row="1"
                HasShadow="False"
-               BorderColor="DeepSkyBlue">
+               BorderColor="DeepSkyBlue"
+               BackgroundColor="LightSkyBlue">
             <Frame.GestureRecognizers>
                 <TapGestureRecognizer CommandParameter="contacts"
                                       Command="{Binding NavigateToSampleCommand}" />
