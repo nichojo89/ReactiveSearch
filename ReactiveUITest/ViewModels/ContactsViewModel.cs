@@ -4,14 +4,16 @@ using ReactiveUI;
 using System.Linq;
 using System.Reactive.Linq;
 using ReactiveUITest.Models;
-using System.Collections.ObjectModel;
 using ReactiveUITest.Services;
-
+using System.Collections.ObjectModel;
 
 namespace ReactiveUITest.ViewModels
 {
     public class ContactsViewModel : ReactiveObject
     {
+        /// <summary>
+        /// OAPH Search
+        /// </summary>
         private readonly ObservableAsPropertyHelper<string> _searchResult;
         public string SearchResult => _searchResult?.Value;
 
@@ -25,7 +27,10 @@ namespace ReactiveUITest.ViewModels
             }
         }
 
-
+        /// <summary>
+        /// TODO Change this to Observable<ChangeSet>
+        /// Add ID 
+        /// </summary>
         private ObservableCollection<Contact> _contacts;
         public ObservableCollection<Contact> Contacts
         {
