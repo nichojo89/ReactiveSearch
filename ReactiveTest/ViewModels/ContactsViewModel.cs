@@ -2,16 +2,13 @@
 using System;
 using ReactiveUI;
 using System.Linq;
-using DynamicData;
+using System.Reactive;
+using System.Diagnostics;
 using ReactiveTest.Models;
 using System.Reactive.Linq;
 using ReactiveTest.Services;
 using System.Collections.ObjectModel;
-using Xamarin.Forms;
 using System.Collections.Generic;
-using DynamicData.Binding;
-using System.Reactive;
-using System.Diagnostics;
 
 namespace ReactiveTest.ViewModels
 {
@@ -56,7 +53,8 @@ namespace ReactiveTest.ViewModels
         public ContactsViewModel(IScreen screen = null, IContactService contactService = null)
         {
             //TODO screen & service are always null
-            HostScreen = screen ?? Locator.Current.GetService<IScreen>();
+            HostScreen = screen
+                ?? Locator.Current.GetService<IScreen>();
             _contactService = contactService
                 ?? Locator.Current.GetService<IContactService>();
 

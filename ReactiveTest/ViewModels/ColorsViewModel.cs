@@ -1,9 +1,10 @@
-﻿using ReactiveUI;
+﻿using Splat;
+using ReactiveUI;
 using Xamarin.Forms;
 
 namespace ReactiveTest.ViewModels
 {
-    public class ColorsPageModel : ReactiveObject
+    public class ColorsViewModel : ReactiveObject, IRoutableViewModel
     {
         public Color BackgroundColor => Color.FromRgb(Red, Green, Blue);
 
@@ -41,6 +42,15 @@ namespace ReactiveTest.ViewModels
                 this.RaiseAndSetIfChanged(ref _green, value);
                 this.RaisePropertyChanged(nameof(BackgroundColor));
             }
+        }
+
+        //Routables
+        public IScreen HostScreen { get; }
+        public string UrlPathSegment => "Colors page";
+
+        public ColorsViewModel(IScreen screen = null)
+        {
+            HostScreen = screen ?? Locator.Current.GetService<IScreen>();
         }
     }
 }

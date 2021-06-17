@@ -1,9 +1,12 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
-<ContentPage iOS:Page.UseSafeArea="True"
-             x:Class="ReactiveTest.Pages.ColorsPage"
-             xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:iOS="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core">
+<reactiveui:ReactiveContentPage iOS:Page.UseSafeArea="True"
+                                x:TypeArguments="vm:ColorsViewModel"
+                                x:Class="ReactiveTest.Pages.ColorsPage"
+                                xmlns:vm="clr-namespace:ReactiveTest.ViewModels"
+                                xmlns="http://xamarin.com/schemas/2014/forms"
+                                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                                xmlns:reactiveui="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
+                                xmlns:iOS="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core">
     <StackLayout>
         <!--R-->
         <Label Text="Red"
@@ -27,4 +30,4 @@
                  VerticalOptions="FillAndExpand"
                  Margin="10" />
     </StackLayout>
-</ContentPage>
+</reactiveui:ReactiveContentPage>

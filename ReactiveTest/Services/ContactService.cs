@@ -5,6 +5,7 @@ namespace ReactiveTest.Services
 {
     public interface IContactService
     {
+        /// <returns>List of contacts</returns>
         IEnumerable<Contact> GetContacts();
     }
 

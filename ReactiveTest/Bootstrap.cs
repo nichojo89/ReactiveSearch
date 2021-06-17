@@ -50,8 +50,7 @@ namespace ReactiveTest
 
             //Register viewmodels
             //TODO Add this back
-            //Locator.CurrentMutable.RegisterViewsForViewModels(Assembly.GetExecutingAssembly());
-            Locator.CurrentMutable.Register(() => new ContactsPage(), typeof(IViewFor<ContactsViewModel>));
+            Locator.CurrentMutable.RegisterViewsForViewModels(Assembly.GetExecutingAssembly());
         }
     }
 }
