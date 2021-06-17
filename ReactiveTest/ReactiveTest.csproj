@@ -17,6 +17,7 @@
     <PackageReference Include="ReactiveUI.XamForms" Version="13.3.2" />
     <PackageReference Include="System.Collections.Immutable" Version="5.0.0" />
     <PackageReference Include="Splat" Version="11.1.1" />
+    <PackageReference Include="Couchbase.Lite" Version="2.8.4" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="ReactiveUI" />
@@ -35,5 +36,6 @@
     <Folder Include="Extensions\" />
     <Folder Include="Models\" />
     <Folder Include="Services\" />
+    <Folder Include="Repositories\" />
   </ItemGroup>
 </Project>
