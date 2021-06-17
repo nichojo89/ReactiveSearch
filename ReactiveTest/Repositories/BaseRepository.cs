@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
 using Couchbase.Lite;
 
 namespace ReactiveTest.Repositories
@@ -49,6 +50,21 @@ namespace ReactiveTest.Repositories
             DatabaseListenerToken = Database.AddChangeListener(OnDatabaseChangeEvent);
         }
 
+        protected virtual async Task<Database> GetDatabaseAsync()
+        {
+            if (_database == null)
+            {
+                var databaseManager = new DatabaseManager(_databaseName);
+
+                if (databaseManager != null)
+                {
+                    _database = await databaseManager.GetDatabaseAsync();
+                }
+            }
+
+            return _database;
+        }
+
         //public abstract T Get(K id);
         //public abstract bool Save(T obj);
 
@@ -77,6 +93,7 @@ namespace ReactiveTest.Repositories
                 Console.WriteLine(message);
             }
         }
+
         public void Dispose()
         {
             if(_database != null)

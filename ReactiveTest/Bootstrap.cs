@@ -7,6 +7,7 @@ using System.Reflection;
 using ReactiveUI.XamForms;
 using ReactiveTest.Services;
 using ReactiveTest.ViewModels;
+using ReactiveTest.Repositories;
 
 namespace ReactiveTest
 {
@@ -46,7 +47,7 @@ namespace ReactiveTest
             //Register Services
             Locator.CurrentMutable.RegisterConstant(this, typeof(IScreen));
             Locator.CurrentMutable.Register(() => new ContactService(), typeof(IContactService));
-
+            Locator.CurrentMutable.Register(() => new UserProfileRepository(), typeof(IUserProfileRepository));
             //Register viewmodels
             Locator.CurrentMutable.RegisterViewsForViewModels(Assembly.GetExecutingAssembly());
         }
