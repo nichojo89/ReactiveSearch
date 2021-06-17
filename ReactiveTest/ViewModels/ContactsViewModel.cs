@@ -10,13 +10,15 @@ using System.Collections.ObjectModel;
 using Xamarin.Forms;
 using System.Collections.Generic;
 using DynamicData.Binding;
+using System.Reactive;
+using System.Diagnostics;
 
 namespace ReactiveTest.ViewModels
 {
     public class ContactsViewModel : ReactiveObject, IRoutableViewModel
     {
         /// <summary>
-        /// OAPH Search
+        /// OAPH search result
         /// </summary>
         private readonly ObservableAsPropertyHelper<string> _searchResult;
         public string SearchResult => _searchResult?.Value;
@@ -31,6 +33,7 @@ namespace ReactiveTest.ViewModels
             }
         }
 
+        private IEnumerable<Contact> _allContacts;
         //TODO how to use source cache?
         private ObservableCollection<Contact> _contacts;
         public ObservableCollection<Contact> Contacts
@@ -42,14 +45,14 @@ namespace ReactiveTest.ViewModels
             }
         }
 
-        private IEnumerable<Contact> _allContacts;
-
+        //Routable events
         public IScreen HostScreen { get; }
         public string UrlPathSegment => "Contacts View";
 
         //Services
         private readonly IContactService _contactService;
-        
+
+        public ReactiveCommand<Unit, Unit> ClearCommand { get; set; }
         public ContactsViewModel(IScreen screen = null, IContactService contactService = null)
         {
             //TODO screen & service are always null
@@ -96,6 +99,22 @@ namespace ReactiveTest.ViewModels
                 })
                 .ToProperty(this, vm => vm.SearchResult, out _searchResult);
 
+            //inline OAPH
+            var canExecuteClear = this
+                .WhenAnyValue(vm => vm.SearchQuery)
+                .Select(query => !string.IsNullOrWhiteSpace(query));
+
+            //Create commands
+            ClearCommand = ReactiveCommand.Create(ClearSearch);
+            ClearCommand.ThrownExceptions.Subscribe(ex =>
+            {
+                Debug.WriteLine(ex);
+            });
+        }
+
+        private void ClearSearch()
+        {
+            SearchQuery = string.Empty;
         }
     }
 }
