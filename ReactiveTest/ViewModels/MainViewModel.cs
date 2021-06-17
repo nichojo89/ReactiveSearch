@@ -1,9 +1,11 @@
-﻿using ReactiveUI;
+﻿
+using Splat;
+using ReactiveUI;
 using System.Reactive.Linq;
 
-namespace ReactiveTest
+namespace ReactiveTest.ViewModels
 {
-    public class MainPageViewModel : ReactiveObject
+    public class MainViewModel : ReactiveObject, IRoutableViewModel
     {
         /// <summary>
         /// OAPH
@@ -21,8 +23,13 @@ namespace ReactiveTest
             }
         }
 
-        public MainPageViewModel()
+        public string UrlPathSegment => "Main page";
+
+        public IScreen HostScreen { get; }
+
+        public MainViewModel(IScreen screen = null)
         {
+            HostScreen = screen ?? Locator.Current.GetService<IScreen>();
             //There are two ways to assign OAPH
 
             //assign the var

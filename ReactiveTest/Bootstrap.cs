@@ -1,13 +1,12 @@
 ﻿using Splat;
 using System;
 using ReactiveUI;
+using Xamarin.Forms;
 using System.Reactive;
 using System.Reflection;
-using ReactiveTest.Services;
-using ReactiveTest.Pages;
-using ReactiveTest.ViewModels;
-using Xamarin.Forms;
 using ReactiveUI.XamForms;
+using ReactiveTest.Services;
+using ReactiveTest.ViewModels;
 
 namespace ReactiveTest
 {
@@ -27,7 +26,7 @@ namespace ReactiveTest
             RegisterServices.Execute().Subscribe();
 
             //Navigate to first page
-            Router.Navigate.Execute(new ContactsViewModel());
+            Router.Navigate.Execute(new MainViewModel());
         }
 
         /// <summary>

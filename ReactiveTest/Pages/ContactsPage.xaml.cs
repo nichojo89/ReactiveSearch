@@ -1,6 +1,5 @@
-﻿using ReactiveTest.ViewModels;
-using ReactiveUI.XamForms;
-using Xamarin.Forms;
+﻿using ReactiveUI.XamForms;
+using ReactiveTest.ViewModels;
 
 namespace ReactiveTest.Pages
 {
