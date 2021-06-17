@@ -13,7 +13,7 @@ using DynamicData.Binding;
 
 namespace ReactiveTest.ViewModels
 {
-    public class ContactsViewModel : ReactiveObject
+    public class ContactsViewModel : ReactiveObject, IRoutableViewModel
     {
         /// <summary>
         /// OAPH Search
@@ -31,71 +31,65 @@ namespace ReactiveTest.ViewModels
             }
         }
 
-        private readonly SourceCache<Contact, int> _contacts = new SourceCache<Contact, int>(c => c.ID);
+        //TODO how to use source cache?
+        private ObservableCollection<Contact> _contacts;
+        public ObservableCollection<Contact> Contacts
+        {
+            get => _contacts;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _contacts, value);
+            }
+        }
 
-        /// <summary>
-        /// DynamicData uses .NET types to expose to the outside world,
-        /// such as ReadOnlyObservableCollection<T>,
-        /// rather than exposing their own types.
-        /// </summary>
-        private readonly ReadOnlyObservableCollection<Contact> _contactsList;
-        public ReadOnlyObservableCollection<Contact> Contacts => _contactsList;
+        private IEnumerable<Contact> _allContacts;
+
+        public IScreen HostScreen { get; }
+        public string UrlPathSegment => "Contacts View";
 
         //Services
         private readonly IContactService _contactService;
         
-        public ContactsViewModel(IContactService contactService = null)
+        public ContactsViewModel(IScreen screen = null, IContactService contactService = null)
         {
+            //TODO screen & service are always null
+            HostScreen = screen ?? Locator.Current.GetService<IScreen>();
             _contactService = contactService
                 ?? Locator.Current.GetService<IContactService>();
 
-            //TODO is this the best return type?
-            var contacts = _contactService.GetContacts();
-
-            //Add contacts to source cache
-            _contacts.AddOrUpdate(contacts);
-
-            //Bind source cache to binding
-            _contacts
-                .Connect()
-                .Bind(out _contactsList)
-                .Subscribe();
+            _allContacts = _contactService.GetContacts();
+            _contacts = new ObservableCollection<Contact>(_allContacts);
 
             //Filter list
             this.WhenAnyValue(vm => vm.SearchQuery)
                 //Delay
                 .Throttle(TimeSpan.FromSeconds(1))
-                .Select(s => s.ToLower())
+                //TODO Is there a way to do this without causing exception?s?
+                //.Select(s => s.ToLower())
                 //Do something
                 .Subscribe(query =>
                 {
                     if (string.IsNullOrWhiteSpace(query))
                     {
-                        //Reset search
-                        _contacts.Clear();
-                        //TODO is this the best way to do this?
-                        _contacts.AddOrUpdate(contacts);
+                        //Reset contacts
+                        Contacts = new ObservableCollection<Contact>(_allContacts);
                         return;
                     }
                     //Filter list by search query
-                    var filteredContacts = contacts
+                    var filteredContacts = _allContacts
                     .Where(x =>
-                    x.FullName.ToLower().Contains(query)
-                    || x.Phone.ToLower().Contains(query)
-                    || x.Email.ToLower().Contains(query));
+                    x.FullName.ToLower().Contains(query.ToLower())
+                    || x.Phone.ToLower().Contains(query.ToLower())
+                    || x.Email.ToLower().Contains(query.ToLower()));
 
-                    //Reset search
-                    _contacts.Clear();
-                    //TODO is this the best way to do this?
-                    _contacts.AddOrUpdate(filteredContacts);
+                    Contacts = new ObservableCollection<Contact>(filteredContacts);
                 });
 
             //Render search subtitle
             this.WhenAnyValue(vm => vm.Contacts)
                 .Select(c =>
                 {
-
-                    if (c.Count == _contacts.Count)
+                    if (c.Count == _allContacts.Count())
                         return "No results found";
                     else
                         return $"{Contacts.Count} have been found for {SearchQuery}";

@@ -1,8 +1,11 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
-<ContentPage iOS:Page.UseSafeArea="True"
+<reactiveUI:ReactiveContentPage x:TypeArguments="vm:ContactsViewModel"
+                                iOS:Page.UseSafeArea="True"
              x:Class="ReactiveTest.Pages.ContactsPage"
              xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:vm="clr-namespace:ReactiveTest.ViewModels"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:reactiveUI="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
              xmlns:iOS="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core">
     <StackLayout>
             <Entry Margin="3"
@@ -46,4 +49,4 @@
                 </ListView.ItemTemplate>
             </ListView>
         </StackLayout>
-</ContentPage>
+</reactiveUI:ReactiveContentPage>

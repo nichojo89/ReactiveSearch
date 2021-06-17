@@ -1,5 +1,4 @@
 ﻿using Xamarin.Forms;
-using ReactiveTest.Pages;
 
 namespace ReactiveTest
 {
@@ -10,9 +9,9 @@ namespace ReactiveTest
             InitializeComponent();
 
             //Register viewmodels & services
-            var bootstrap = new Bootstrap();
+            var bootstraper = new Bootstrap();
 
-            MainPage = new ColorsPage();
+            MainPage = bootstraper.CreateMainPage();
         }
     }
 }

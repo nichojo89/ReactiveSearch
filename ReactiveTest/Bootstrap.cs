@@ -4,21 +4,39 @@ using ReactiveUI;
 using System.Reactive;
 using System.Reflection;
 using ReactiveTest.Services;
+using ReactiveTest.Pages;
+using ReactiveTest.ViewModels;
+using Xamarin.Forms;
+using ReactiveUI.XamForms;
 
 namespace ReactiveTest
 {
-    public class Bootstrap
+    public class Bootstrap : ReactiveObject, IScreen
     {
         ReactiveCommand<Unit, Unit> RegisterServices { get; }
 
+        public RoutingState Router { get; }
+
         public Bootstrap()
         {
+            Router = new RoutingState();
             //Spmething to be  observed
             RegisterServices = ReactiveCommand.Create(Register);
 
             //Fire off event
             RegisterServices.Execute().Subscribe();
 
+            //Navigate to first page
+            Router.Navigate.Execute(new ContactsViewModel());
+        }
+
+        /// <summary>
+        /// Sets the Main page as a RoutedViewHost
+        /// </summary>
+        /// <returns></returns>
+        public Page CreateMainPage()
+        {
+            return new RoutedViewHost();
         }
 
         /// <summary>
@@ -26,11 +44,14 @@ namespace ReactiveTest
         /// </summary>
         private void Register()
         {
-            //Register a singleton instance
-            Locator.CurrentMutable.RegisterConstant(new ContactService(), typeof(IContactService));
+            //Register Services
+            Locator.CurrentMutable.RegisterConstant(this, typeof(IScreen));
+            Locator.CurrentMutable.Register(() => new ContactService(), typeof(IContactService));
 
             //Register viewmodels
-            Locator.CurrentMutable.RegisterViewsForViewModels(Assembly.GetExecutingAssembly());
+            //TODO Add this back
+            //Locator.CurrentMutable.RegisterViewsForViewModels(Assembly.GetExecutingAssembly());
+            Locator.CurrentMutable.Register(() => new ContactsPage(), typeof(IViewFor<ContactsViewModel>));
         }
     }
 }
