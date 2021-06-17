@@ -10,9 +10,9 @@ namespace ReactiveTest
             InitializeComponent();
 
             //Register viewmodels & services
-            _ = new Bootstrap();
+            var bootstrap = new Bootstrap();
 
-            MainPage = new ContactsPage();
+            MainPage = new ColorsPage();
         }
     }
 }
