@@ -64,7 +64,7 @@ namespace ReactiveTest.ViewModels
             //Filter list
             this.WhenAnyValue(vm => vm.SearchQuery)
                 //Delay
-                .Throttle(TimeSpan.FromSeconds(1))
+                .Throttle(TimeSpan.FromMilliseconds(250), RxApp.TaskpoolScheduler)
                 //TODO Is there a way to do this without causing exception?s?
                 //.Select(s => s.ToLower())
                 //Do something
