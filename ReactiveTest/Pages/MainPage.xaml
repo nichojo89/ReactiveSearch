@@ -11,6 +11,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Frame Margin="20"
                HasShadow="False"
@@ -37,6 +38,20 @@
             </Frame.GestureRecognizers>
             <StackLayout>
                 <Label Text="Search"
+                       HorizontalTextAlignment="Center"/>
+            </StackLayout>
+        </Frame>
+        <Frame Margin="20"
+               Grid.Row="2"
+               HasShadow="False"
+               BorderColor="DeepSkyBlue"
+               BackgroundColor="LightSkyBlue">
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer CommandParameter="signin"
+                                      Command="{Binding NavigateToSampleCommand}" />
+            </Frame.GestureRecognizers>
+            <StackLayout>
+                <Label Text="Signin"
                        HorizontalTextAlignment="Center"/>
             </StackLayout>
         </Frame>

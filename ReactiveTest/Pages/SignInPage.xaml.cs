@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-
-using Xamarin.Forms;
+﻿using ReactiveUI.XamForms;
+using ReactiveTest.ViewModels;
 
 namespace ReactiveTest.Pages
 {
-    public partial class SignInPage : ContentPage
+    public partial class SignInPage : ReactiveContentPage<SignInViewModel>
     {
         public SignInPage()
         {

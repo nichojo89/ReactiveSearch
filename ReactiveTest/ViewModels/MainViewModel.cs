@@ -1,9 +1,6 @@
-﻿
-using Splat;
+﻿using Splat;
 using ReactiveUI;
 using System.Reactive.Linq;
-using System.Reactive;
-using System.Reactive.Disposables;
 
 namespace ReactiveTest.ViewModels
 {
@@ -27,6 +24,7 @@ namespace ReactiveTest.ViewModels
 
         public IScreen HostScreen { get; }
         public const string Colors = "colors";
+        public const string SignIn = "signin";
         public const string Contacts = "contacts";
         public string UrlPathSegment => "Main page";
         public ReactiveCommand<string,IRoutableViewModel> NavigateToSampleCommand { get; }
@@ -50,16 +48,19 @@ namespace ReactiveTest.ViewModels
             //     (s) => HostScreen.Router.Navigate.Execute(new ColorsViewModel(null))
             //);
 
-
             NavigateToSampleCommand = ReactiveCommand.CreateFromObservable<string, IRoutableViewModel>((name) =>
              {
 
                  switch (name)
                  {
                      case Colors:
-                         return HostScreen.Router.Navigate.Execute(new ColorsViewModel(null));
+                         //TODO, Should I be passing IScreen around
+                         //How is this normal done?
+                         return HostScreen.Router.Navigate.Execute(new ColorsViewModel(HostScreen));
                      case Contacts:
                         return HostScreen.Router.Navigate.Execute(new ContactsViewModel(HostScreen));
+                     case SignIn:
+                         return HostScreen.Router.Navigate.Execute(new SignInViewModel(HostScreen));
                  }
 
                  return null;
