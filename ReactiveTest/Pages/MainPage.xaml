@@ -7,7 +7,36 @@
                                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                                 xmlns:reactiveui="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
                                 xmlns:iOS="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core">
-    <StackLayout>
-
-    </StackLayout>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Frame Margin="20"
+               HasShadow="False"
+               Grid.Row="0"
+               BorderColor="DeepSkyBlue">
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer CommandParameter="colors"
+                                      Command="{Binding NavigateToSampleCommand}" />
+            </Frame.GestureRecognizers>
+            <StackLayout>
+                <Label Text="Colors"
+                       HorizontalTextAlignment="Center"/>
+            </StackLayout>
+        </Frame>
+        <Frame Margin="20"
+               Grid.Row="1"
+               HasShadow="False"
+               BorderColor="DeepSkyBlue">
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer CommandParameter="contacts"
+                                      Command="{Binding NavigateToSampleCommand}" />
+            </Frame.GestureRecognizers>
+            <StackLayout>
+                <Label Text="Search"
+                       HorizontalTextAlignment="Center"/>
+            </StackLayout>
+        </Frame>
+    </Grid>
 </reactiveui:ReactiveContentPage>

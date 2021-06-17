@@ -7,8 +7,8 @@ using System.Diagnostics;
 using ReactiveTest.Models;
 using System.Reactive.Linq;
 using ReactiveTest.Services;
-using System.Collections.ObjectModel;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace ReactiveTest.ViewModels
 {

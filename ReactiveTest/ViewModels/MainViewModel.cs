@@ -2,13 +2,15 @@
 using Splat;
 using ReactiveUI;
 using System.Reactive.Linq;
+using System.Reactive;
+using System.Reactive.Disposables;
 
 namespace ReactiveTest.ViewModels
 {
     public class MainViewModel : ReactiveObject, IRoutableViewModel
     {
         /// <summary>
-        /// OAPH
+        /// OAPH example
         /// </summary>
         private readonly ObservableAsPropertyHelper<string> _firstName;
         public string FirstName => _firstName.Value;
@@ -23,10 +25,12 @@ namespace ReactiveTest.ViewModels
             }
         }
 
-        public string UrlPathSegment => "Main page";
-
         public IScreen HostScreen { get; }
-
+        public const string Colors = "colors";
+        public const string Contacts = "contacts";
+        public string UrlPathSegment => "Main page";
+        public ReactiveCommand<string,IRoutableViewModel> NavigateToSampleCommand { get; }
+        
         public MainViewModel(IScreen screen = null)
         {
             HostScreen = screen ?? Locator.Current.GetService<IScreen>();
@@ -41,6 +45,25 @@ namespace ReactiveTest.ViewModels
             this.WhenAnyValue(vm => vm.Name)
                 .Select(name => name.Split(' ')[0])
                 .ToProperty(this, nameof(FirstName), out _firstName);
+
+            //NavigateToSampleCommand = ReactiveCommand.CreateFromObservable<string, IRoutableViewModel>(
+            //     (s) => HostScreen.Router.Navigate.Execute(new ColorsViewModel(null))
+            //);
+
+
+            NavigateToSampleCommand = ReactiveCommand.CreateFromObservable<string, IRoutableViewModel>((name) =>
+             {
+
+                 switch (name)
+                 {
+                     case Colors:
+                         return HostScreen.Router.Navigate.Execute(new ColorsViewModel(null));
+                     case Contacts:
+                        return HostScreen.Router.Navigate.Execute(new ContactsViewModel(HostScreen));
+                 }
+
+                 return null;
+             });
         }
     }
 }
