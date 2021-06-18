@@ -2,31 +2,49 @@
 <reactiveui:ReactiveContentPage iOS:Page.UseSafeArea="True"
                                 x:TypeArguments="vm:SignInViewModel"
                                 x:Class="ReactiveTest.Pages.SignInPage"
-                                xmlns:vm="clr-namespace:ReactiveTest.ViewModels"
                                 xmlns="http://xamarin.com/schemas/2014/forms"
+                                xmlns:vm="clr-namespace:ReactiveTest.ViewModels"
                                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                                xmlns:converters="clr-namespace:ReactiveTest.Converters"
                                 xmlns:reactiveui="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
                                 xmlns:iOS="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core">
-    <StackLayout>
-        <Label Margin="20"
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <StackLayout IsVisible="{Binding IsSignInVisible}">
+            <Label Margin="20"
                Text="Sign in to cache couchdb"
                VerticalTextAlignment="Center"
-               HorizontalTextAlignment="Center"/>
-        <Entry Margin="20"
+               HorizontalTextAlignment="Center"
+               IsVisible="{Binding IsSignInVisible}"/>
+            <Entry Margin="20"
                Text="{Binding UserName}"
                Placeholder="Username"
                PlaceholderColor="Black"
                BackgroundColor="LightSkyBlue"/>
-        <Entry Margin="20"
+            <Entry Margin="20"
                Placeholder="Password"
                Text="{Binding Password}"
                PlaceholderColor="Black"
                BackgroundColor="LightSkyBlue"/>
 
-        <Button Margin="20"
+            <Button Margin="20"
                 Text="Sign in"
                 TextColor="White"
                 BackgroundColor="DarkRed"
                 Command="{Binding SignInCommand}" />
-    </StackLayout>
+        </StackLayout>
+        <StackLayout IsVisible="{Binding IsSignInVisible,Converter={StaticResource ReverseBool}}">
+            <Label Margin="20"
+                   Text="You've signed in!"
+                   VerticalTextAlignment="Center"
+                   HorizontalTextAlignment="Center" />
+            <Button Margin="20"
+                    Text="Sign out"
+                    TextColor="White"
+                    BackgroundColor="DarkRed"/>
+        </StackLayout>
+    </Grid>
 </reactiveui:ReactiveContentPage >
